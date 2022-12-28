@@ -1,12 +1,12 @@
-import { UsersService } from '@Src/users/users.service';
+import { UsersService } from '@Src/api/users/users.service';
 import { LoggerMiddleware } from './middlewares/logger.middleware';
 import { MiddlewareConsumer, Module, NestModule, Logger } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import axios from 'axios';
-import { UsersModule } from '@Src/users/users.module';
-import { WorkspacesModule } from './workspaces/workspaces.module';
-import { ChannelsModule } from './channels/channels.module';
-import { DmsModule } from './dms/dms.module';
+import { UsersModule } from '@Src/api/users/users.module';
+import { WorkspacesModule } from './api/workspaces/workspaces.module';
+import { ChannelsModule } from './api/channels/channels.module';
+import { DmsModule } from './api/dms/dms.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
