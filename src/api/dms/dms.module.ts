@@ -1,5 +1,5 @@
-import { DmsController } from '@Src/Dms/dms.controller';
-import { DmsService } from '@Src/Dms/dms.service';
+import { DmsController } from '@Src/api/Dms/dms.controller';
+import { DmsService } from '@Src/api/Dms/dms.service';
 import { Module } from '@nestjs/common';
 
 @Module({

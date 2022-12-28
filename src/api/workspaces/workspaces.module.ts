@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { WorkspacesService } from '@Src/workspaces/workspaces.service';
-import { WorkspacesController } from '@Src/workspaces/workspaces.controller';
+import { WorkspacesService } from '@Src/api/workspaces/workspaces.service';
+import { WorkspacesController } from '@Src/api/workspaces/workspaces.controller';
 
 @Module({
   providers: [WorkspacesService],

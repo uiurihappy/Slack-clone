@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Post, Query, Req, Res } from '@nestjs/common';
-import { JoinRequestDto } from '@Src/users/dto/join.request.dto';
-import { UsersService } from '@Src/users/users.service';
+import { JoinRequestDto } from '@Src/api/users/dto/join.request.dto';
+import { UsersService } from '@Src/api/users/users.service';
 import { ApiOperation } from '@nestjs/swagger';
 
 @Controller('users')
