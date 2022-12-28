@@ -1,9 +1,13 @@
 import { LoggerMiddleware } from './middlewares/logger.middleware';
 import { MiddlewareConsumer, Module, NestModule, Logger } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import axios from 'axios';
+import { UsersModule } from '@Src/users/users.module';
+import { WorkspacesModule } from './workspaces/workspaces.module';
+import { ChannelsModule } from './channels/channels.module';
+import { DmsModule } from './dms/dms.module';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
 
 const getEnv = async () => {
   const response = await axios.get('/test');
@@ -11,7 +15,13 @@ const getEnv = async () => {
 };
 
 @Module({
-  imports: [ConfigModule.forRoot({ isGlobal: true })],
+  imports: [
+    ConfigModule.forRoot({ isGlobal: true }),
+    UsersModule,
+    WorkspacesModule,
+    ChannelsModule,
+    DmsModule,
+  ],
   controllers: [AppController],
   providers: [AppService, ConfigService],
 })
