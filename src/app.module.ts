@@ -1,3 +1,4 @@
+import { UsersService } from '@Src/users/users.service';
 import { LoggerMiddleware } from './middlewares/logger.middleware';
 import { MiddlewareConsumer, Module, NestModule, Logger } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
@@ -23,7 +24,7 @@ const getEnv = async () => {
     DmsModule,
   ],
   controllers: [AppController],
-  providers: [AppService, ConfigService],
+  providers: [AppService, ConfigService, UsersService],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
