@@ -1,14 +1,25 @@
 import { UserDto } from './dto/user.dto';
-import { Body, Controller, Get, Post, Query, Req, Res } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Query,
+  Req,
+  Res,
+  UseInterceptors,
+} from '@nestjs/common';
 import { JoinRequestDto } from '@Src/api/users/dto/join.request.dto';
 import { UsersService } from '@Src/api/users/users.service';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { User } from '@Src/common/decorator/user.decorator';
+import { UndefinedToNullInterceptor } from '@Src/common/interceptors/undefinedToNull.interceptor';
 
+@UseInterceptors(UndefinedToNullInterceptor)
 @ApiTags('USER')
 @Controller('users')
 export class UsersController {
-  constructor(private usersService: UsersService) {}
+  constructor(private readonly usersService: UsersService) {}
 
   @ApiResponse({
     status: 200,
