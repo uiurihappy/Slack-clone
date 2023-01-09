@@ -47,7 +47,7 @@ const getEnv = async () => {
           DMs,
           Mentions,
         ],
-        // keepConnectionAlive: true,
+        keepConnectionAlive: true,
         logging: ['error'],
         timezone: '+09:00',
       }),
