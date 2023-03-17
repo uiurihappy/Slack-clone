@@ -12,13 +12,6 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { join } from 'path';
-import { ChannelChats } from '@Src/entities/ChannelChats.entity';
-import { ChannelMembers } from '@Src/entities/ChannelMembers.entity';
-import { Channels } from '@Src/entities/Channels.entity';
-import { Dms } from '@Src/entities/DMs.entity';
-import { Mentions } from '@Src/entities/Mentions.entity';
-import { WorkspaceMembers } from '@Src/entities/WorkspaceMembers.entity';
-import { Workspaces } from '@Src/entities/Workspaces.entity';
 
 const getEnv = async () => {
   const response = await axios.get('/test');

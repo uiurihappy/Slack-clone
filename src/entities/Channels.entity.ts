@@ -1,17 +1,22 @@
 import {
   Column,
+  CreateDateColumn,
   Entity,
   Index,
   JoinColumn,
+  ManyToMany,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
-import { ChannelChats } from './Channelchats.entity';
-import { Workspaces } from './Workspaces.entity';
+import { ChannelChats } from './ChannelChats.entity';
+import { ChannelMembers } from './ChannelMembers.entity';
+import { Users } from '@Entities/Users.entity';
+import { Workspaces } from '@Entities/Workspaces.entity';
 
-@Index('WorkspaceId', ['workspaceId'], {})
-@Entity('channels', { schema: 'sleact' })
+@Index('WorkspaceId', ['WorkspaceId'], {})
+@Entity({ schema: 'sleact' })
 export class Channels {
   @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
   id: number;
@@ -27,28 +32,30 @@ export class Channels {
   })
   private: boolean | null;
 
-  @Column('datetime', {
-    name: 'createdAt',
-    default: () => "'CURRENT_TIMESTAMP(6)'",
-  })
+  @CreateDateColumn()
   createdAt: Date;
 
-  @Column('datetime', {
-    name: 'updatedAt',
-    default: () => "'CURRENT_TIMESTAMP(6)'",
-  })
+  @UpdateDateColumn()
   updatedAt: Date;
 
   @Column('int', { name: 'WorkspaceId', nullable: true })
-  workspaceId: number | null;
+  WorkspaceId: number | null;
 
-  @OneToMany(() => ChannelChats, channelChats => channelChats.channel)
-  channelChats: ChannelChats[];
+  @OneToMany(() => ChannelChats, channelchats => channelchats.Channel)
+  ChannelChats: ChannelChats[];
 
-  @ManyToOne(() => Workspaces, workspaces => workspaces.channels, {
+  @OneToMany(() => ChannelMembers, channelMembers => channelMembers.Channel, {
+    cascade: ['insert'],
+  })
+  ChannelMembers: ChannelMembers[];
+
+  @ManyToMany(() => Users, users => users.Channels)
+  Members: Users[];
+
+  @ManyToOne(() => Workspaces, workspaces => workspaces.Channels, {
     onDelete: 'SET NULL',
     onUpdate: 'CASCADE',
   })
   @JoinColumn([{ name: 'WorkspaceId', referencedColumnName: 'id' }])
-  workspace: Workspaces;
+  Workspace: Workspaces;
 }

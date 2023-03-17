@@ -1,17 +1,19 @@
 import {
   Column,
+  CreateDateColumn,
   Entity,
   Index,
   JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
-import { Channels } from './Channels.entity';
-import { Users } from './Users.entity';
+import { Users } from '@Entities/Users.entity';
+import { Channels } from '@Entities/Channels.entity';
 
-@Index('ChannelId', ['channelId'], {})
-@Index('UserId', ['userId'], {})
-@Entity('channelChats', { schema: 'sleact' })
+@Index('UserId', ['UserId'], {})
+@Index('ChannelId', ['ChannelId'], {})
+@Entity({ schema: 'sleact', name: 'channelchats' })
 export class ChannelChats {
   @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
   id: number;
@@ -19,35 +21,29 @@ export class ChannelChats {
   @Column('text', { name: 'content' })
   content: string;
 
-  @Column('datetime', {
-    name: 'createdAt',
-    default: () => "'CURRENT_TIMESTAMP(6)'",
-  })
+  @CreateDateColumn()
   createdAt: Date;
 
-  @Column('datetime', {
-    name: 'updatedAt',
-    default: () => "'CURRENT_TIMESTAMP(6)'",
-  })
+  @UpdateDateColumn()
   updatedAt: Date;
 
   @Column('int', { name: 'UserId', nullable: true })
-  userId: number | null;
+  UserId: number | null;
 
   @Column('int', { name: 'ChannelId', nullable: true })
-  channelId: number | null;
+  ChannelId: number | null;
 
-  @ManyToOne(() => Channels, channels => channels.channelChats, {
-    onDelete: 'SET NULL',
-    onUpdate: 'CASCADE',
-  })
-  @JoinColumn([{ name: 'ChannelId', referencedColumnName: 'id' }])
-  channel: Channels;
-
-  @ManyToOne(() => Users, users => users.channelChats, {
+  @ManyToOne(() => Users, users => users.ChannelChats, {
     onDelete: 'SET NULL',
     onUpdate: 'CASCADE',
   })
   @JoinColumn([{ name: 'UserId', referencedColumnName: 'id' }])
-  user: Users;
+  User: Users;
+
+  @ManyToOne(() => Channels, channels => channels.ChannelChats, {
+    onDelete: 'SET NULL',
+    onUpdate: 'CASCADE',
+  })
+  @JoinColumn([{ name: 'ChannelId', referencedColumnName: 'id' }])
+  Channel: Channels;
 }
