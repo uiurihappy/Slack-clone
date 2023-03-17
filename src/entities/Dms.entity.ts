@@ -55,7 +55,7 @@ export class Dms {
   @JoinColumn([{ name: 'ReceiverId', referencedColumnName: 'id' }])
   receiver: Users;
 
-  @ManyToOne(() => Users, users => users.dms, {
+  @ManyToOne(() => Users, users => users.dms2, {
     onDelete: 'SET NULL',
     onUpdate: 'CASCADE',
   })

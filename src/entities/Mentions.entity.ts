@@ -58,7 +58,7 @@ export class Mentions {
   @JoinColumn([{ name: 'ReceiverId', referencedColumnName: 'id' }])
   receiver: Users;
 
-  @ManyToOne(() => Users, users => users.mentions, {
+  @ManyToOne(() => Users, users => users.mentions2, {
     onDelete: 'SET NULL',
     onUpdate: 'CASCADE',
   })
