@@ -5,12 +5,12 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Channelchats } from './Channelchats';
-import { Channelmembers } from './Channelmembers';
-import { Dms } from './Dms';
-import { Mentions } from './Mentions';
-import { Workspacemembers } from './Workspacemembers';
-import { Workspaces } from './Workspaces';
+import { ChannelChats } from './Channelchats.entity';
+import { ChannelMembers } from './Channelmembers.entity';
+import { Dms } from './Dms.entity';
+import { Mentions } from './Mentions.entity';
+import { WorkspaceMembers } from './Workspacemembers.entity';
+import { Workspaces } from './Workspaces.entity';
 
 @Index('email', ['email'], { unique: true })
 @Entity('users', { schema: 'sleact' })
@@ -42,11 +42,11 @@ export class Users {
   @Column('datetime', { name: 'deletedAt', nullable: true })
   deletedAt: Date | null;
 
-  @OneToMany(() => Channelchats, channelchats => channelchats.user)
-  channelchats: Channelchats[];
+  @OneToMany(() => ChannelChats, channelchats => channelchats.user)
+  channelChats: ChannelChats[];
 
-  @OneToMany(() => Channelmembers, channelmembers => channelmembers.user)
-  channelmembers: Channelmembers[];
+  @OneToMany(() => ChannelMembers, channelmembers => channelmembers.user)
+  channelMembers: ChannelMembers[];
 
   @OneToMany(() => Dms, dms => dms.receiver)
   dms: Dms[];
@@ -60,8 +60,8 @@ export class Users {
   @OneToMany(() => Mentions, mentions => mentions.sender)
   mentions2: Mentions[];
 
-  @OneToMany(() => Workspacemembers, workspacemembers => workspacemembers.user)
-  workspacemembers: Workspacemembers[];
+  @OneToMany(() => WorkspaceMembers, workspaceMembers => workspaceMembers.user)
+  workspaceMembers: WorkspaceMembers[];
 
   @OneToMany(() => Workspaces, workspaces => workspaces.owner)
   workspaces: Workspaces[];

@@ -6,13 +6,13 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Channels } from './Channels';
-import { Users } from './Users';
+import { Channels } from './Channels.entity';
+import { Users } from './Users.entity';
 
 @Index('ChannelId', ['channelId'], {})
 @Index('UserId', ['userId'], {})
-@Entity('channelchats', { schema: 'sleact' })
-export class Channelchats {
+@Entity('channelChats', { schema: 'sleact' })
+export class ChannelChats {
   @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
   id: number;
 
@@ -37,14 +37,14 @@ export class Channelchats {
   @Column('int', { name: 'ChannelId', nullable: true })
   channelId: number | null;
 
-  @ManyToOne(() => Channels, channels => channels.channelchats, {
+  @ManyToOne(() => Channels, channels => channels.channelChats, {
     onDelete: 'SET NULL',
     onUpdate: 'CASCADE',
   })
   @JoinColumn([{ name: 'ChannelId', referencedColumnName: 'id' }])
   channel: Channels;
 
-  @ManyToOne(() => Users, users => users.channelchats, {
+  @ManyToOne(() => Users, users => users.channelChats, {
     onDelete: 'SET NULL',
     onUpdate: 'CASCADE',
   })

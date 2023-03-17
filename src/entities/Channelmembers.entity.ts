@@ -1,9 +1,9 @@
 import { Column, Entity, Index, JoinColumn, ManyToOne } from 'typeorm';
-import { Users } from './Users';
+import { Users } from './Users.entity';
 
 @Index('UserId', ['userId'], {})
-@Entity('channelmembers', { schema: 'sleact' })
-export class Channelmembers {
+@Entity('channelMembers', { schema: 'sleact' })
+export class ChannelMembers {
   @Column('int', { primary: true, name: 'ChannelId' })
   channelId: number;
 
@@ -22,7 +22,7 @@ export class Channelmembers {
   })
   updatedAt: Date;
 
-  @ManyToOne(() => Users, users => users.channelmembers, {
+  @ManyToOne(() => Users, users => users.channelMembers, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })

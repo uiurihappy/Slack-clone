@@ -7,10 +7,10 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Channels } from './Channels';
-import { Dms } from './Dms';
-import { Mentions } from './Mentions';
-import { Users } from './Users';
+import { Channels } from './Channels.entity';
+import { Dms } from './Dms.entity';
+import { Mentions } from './Mentions.entity';
+import { Users } from './Users.entity';
 
 @Index('url', ['url'], { unique: true })
 @Index('name', ['name'], { unique: true })

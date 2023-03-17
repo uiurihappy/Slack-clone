@@ -1,9 +1,9 @@
 import { Column, Entity, Index, JoinColumn, ManyToOne } from 'typeorm';
-import { Users } from './Users';
+import { Users } from './Users.entity';
 
 @Index('UserId', ['userId'], {})
-@Entity('workspacemembers', { schema: 'sleact' })
-export class Workspacemembers {
+@Entity('workspaceMembers', { schema: 'sleact' })
+export class WorkspaceMembers {
   @Column('int', { primary: true, name: 'WorkspaceId' })
   workspaceId: number;
 
@@ -25,7 +25,7 @@ export class Workspacemembers {
   @Column('datetime', { name: 'loggedInAt', nullable: true })
   loggedInAt: Date | null;
 
-  @ManyToOne(() => Users, users => users.workspacemembers, {
+  @ManyToOne(() => Users, users => users.workspaceMembers, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })

@@ -6,8 +6,8 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Workspaces } from './Workspaces';
-import { Users } from './Users';
+import { Workspaces } from './Workspaces.entity';
+import { Users } from './Users.entity';
 
 @Index('ReceiverId', ['receiverId'], {})
 @Index('SenderId', ['senderId'], {})
@@ -58,7 +58,7 @@ export class Mentions {
   @JoinColumn([{ name: 'ReceiverId', referencedColumnName: 'id' }])
   receiver: Users;
 
-  @ManyToOne(() => Users, users => users.mentions2, {
+  @ManyToOne(() => Users, users => users.mentions, {
     onDelete: 'SET NULL',
     onUpdate: 'CASCADE',
   })

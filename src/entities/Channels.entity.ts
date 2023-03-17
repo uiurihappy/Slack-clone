@@ -7,8 +7,8 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Channelchats } from './Channelchats';
-import { Workspaces } from './Workspaces';
+import { ChannelChats } from './Channelchats.entity';
+import { Workspaces } from './Workspaces.entity';
 
 @Index('WorkspaceId', ['workspaceId'], {})
 @Entity('channels', { schema: 'sleact' })
@@ -42,8 +42,8 @@ export class Channels {
   @Column('int', { name: 'WorkspaceId', nullable: true })
   workspaceId: number | null;
 
-  @OneToMany(() => Channelchats, channelchats => channelchats.channel)
-  channelchats: Channelchats[];
+  @OneToMany(() => ChannelChats, channelChats => channelChats.channel)
+  channelChats: ChannelChats[];
 
   @ManyToOne(() => Workspaces, workspaces => workspaces.channels, {
     onDelete: 'SET NULL',
