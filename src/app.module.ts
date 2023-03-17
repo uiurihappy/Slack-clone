@@ -67,6 +67,7 @@ dotenv.config();
     WorkspacesModule,
     ChannelsModule,
     DMsModule,
+    TypeOrmModule.forFeature([Users]),
   ],
   controllers: [AppController],
   providers: [AppService, ConfigService, UsersService],

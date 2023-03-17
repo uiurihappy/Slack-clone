@@ -30,19 +30,26 @@ export class Users {
   id: number;
 
   @ApiProperty({
-    example: 'uiurihappy@naver.com',
-    description: '유저 e-mail',
+    example: 'ybchar@gmail.com',
+    description: '이메일',
+    required: true,
   })
   @Column('varchar', { name: 'email', unique: true, length: 30 })
   email: string;
 
   @ApiProperty({
-    example: '차루',
-    description: '유저 닉네임',
+    example: 'ybchar',
+    description: '닉네임',
+    required: true,
   })
   @Column('varchar', { name: 'nickname', length: 30 })
   nickname: string;
 
+  @ApiProperty({
+    example: '12345656',
+    description: '비밀번호',
+    required: true,
+  })
   @Column('varchar', { name: 'password', length: 100, select: false })
   password: string;
 
