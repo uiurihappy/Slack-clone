@@ -8,8 +8,8 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Workspaces } from '@Entities/Workspaces.entity';
-import { Users } from '@Entities/Users.entity';
+import { Workspaces } from './Workspaces';
+import { Users } from './Users';
 
 @Index('WorkspaceId', ['WorkspaceId'], {})
 @Index('dms_ibfk_2', ['SenderId'], {})

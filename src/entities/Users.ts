@@ -10,23 +10,36 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { ChannelChats } from './ChannelChats.entity';
-import { ChannelMembers } from './ChannelMembers.entity';
-import { Channels } from './Channels.entity';
-import { DMs } from './DMs.entity';
-import { Mentions } from './Mentions.entity';
-import { WorkspaceMembers } from './WorkspaceMembers.entity';
-import { Workspaces } from './Workspaces.entity';
+import { ChannelChats } from './Channelchats';
+import { ChannelMembers } from './ChannelMembers';
+import { Channels } from './Channels';
+import { DMs } from './Dms';
+import { Mentions } from './Mentions';
+import { WorkspaceMembers } from './WorkspaceMembers';
+import { Workspaces } from './Workspaces';
+import { ApiProperty } from '@nestjs/swagger';
 
 @Index('email', ['email'], { unique: true })
 @Entity({ schema: 'sleact', name: 'users' })
 export class Users {
+  @ApiProperty({
+    example: 1,
+    description: '유저 ID',
+  })
   @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
   id: number;
 
+  @ApiProperty({
+    example: 'uiurihappy@naver.com',
+    description: '유저 e-mail',
+  })
   @Column('varchar', { name: 'email', unique: true, length: 30 })
   email: string;
 
+  @ApiProperty({
+    example: '차루',
+    description: '유저 닉네임',
+  })
   @Column('varchar', { name: 'nickname', length: 30 })
   nickname: string;
 

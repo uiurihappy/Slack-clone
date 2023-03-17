@@ -11,11 +11,11 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Channels } from './Channels.entity';
-import { DMs } from './DMs.entity';
-import { Mentions } from './Mentions.entity';
-import { WorkspaceMembers } from './WorkspaceMembers.entity';
-import { Users } from './Users.entity';
+import { Channels } from './Channels';
+import { DMs } from './Dms';
+import { Mentions } from './Mentions';
+import { WorkspaceMembers } from './WorkspaceMembers';
+import { Users } from './Users';
 
 @Index('name', ['name'], { unique: true })
 @Index('url', ['url'], { unique: true })
