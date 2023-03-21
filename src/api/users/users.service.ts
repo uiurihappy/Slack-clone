@@ -4,6 +4,7 @@ import { Users } from '@Entities/Users';
 import { Repository } from 'typeorm';
 import bcrypt from 'bcrypt';
 import { HttpExceptionFilter } from '@Src/exception/http-exception.filter';
+import { JoinRequestDto } from '@Src/api/users/dto/join.request.dto';
 @Injectable()
 export class UsersService {
   constructor(
@@ -21,31 +22,32 @@ export class UsersService {
     }
   }
 
-  async join(email: string, nickname: string, password: string) {
-    if (!email) {
-      throw new HttpException('이메일이 없습니다.', 400);
-    } else if (!nickname) {
-      throw new HttpException('닉네임이 없습니다.', 400);
-    } else if (!password) {
-      throw new HttpException('비밀번호가 없습니다.', 400);
-    }
+  async join(
+    email: string,
+    nickname: string,
+    password: string,
+  ): Promise<JoinRequestDto> {
+    // if (!email) {
+    //   throw new HttpException('이메일이 없습니다.', 400);
+    // } else if (!nickname) {
+    //   throw new HttpException('닉네임이 없습니다.', 400);
+    // } else if (!password) {
+    //   throw new HttpException('비밀번호가 없습니다.', 400);
+    // }
 
     const user = await this.usersRepository.findOne({
       where: { email },
     });
     if (user) {
       // 이미 존재하는 유저
-      throw new Error('User exist');
+      throw new HttpException('User exist', 461);
     } else {
       const hashedPassword = await bcrypt.hash(password, 12);
-      await this.usersRepository.save({
+      return await this.usersRepository.save({
         email,
         nickname,
         password: hashedPassword,
       });
-      return {
-        message: `email: ${email}, nickname: ${nickname}, password:${password}`,
-      };
     }
   }
 }

@@ -16,6 +16,7 @@ import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { User } from '@Src/common/decorator/user.decorator';
 import { UndefinedToNullInterceptor } from '@Src/common/interceptors/undefinedToNull.interceptor';
 import { HttpExceptionFilter } from '@Src/exception/http-exception.filter';
+import { Response, Request } from 'express';
 
 @UseInterceptors(UndefinedToNullInterceptor)
 @ApiTags('USER')
@@ -40,9 +41,9 @@ export class UsersController {
 
   @ApiOperation({ summary: '회원가입' })
   @Post('join')
-  async postUsers(@Body() data: JoinRequestDto): Promise<{ message: string }> {
+  async postUsers(@Body() data: JoinRequestDto, @Res() res: Response) {
     const { email, nickname, password } = data;
-    return await this.usersService.join(email, nickname, password);
+    res.status(201).json({ message: 'success' });
   }
 
   @ApiOperation({ summary: '로그인' })
