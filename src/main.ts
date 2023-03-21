@@ -6,6 +6,7 @@ import session from 'express-session';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
 import { NestExpressApplication } from '@nestjs/platform-express';
+import { HttpExceptionFilter } from '@Src/exception/http-exception.filter';
 
 declare const module: any;
 
@@ -17,11 +18,9 @@ async function bootstrap() {
     module.hot.accept();
     module.hot.dispose(() => app.close());
   }
-  // app.useGlobalPipes(
-  //   new ValidationPipe({
-  //     transform: true,
-  //   }),
-  // );
+
+  app.useGlobalFilters(new HttpExceptionFilter());
+
   app.use(cookieParser());
   app.use(
     session({

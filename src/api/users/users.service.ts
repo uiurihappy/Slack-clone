@@ -1,8 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Users } from '@Entities/Users';
 import { Repository } from 'typeorm';
 import bcrypt from 'bcrypt';
+import { HttpExceptionFilter } from '@Src/exception/http-exception.filter';
 @Injectable()
 export class UsersService {
   constructor(
@@ -20,9 +21,17 @@ export class UsersService {
     }
   }
 
-  async postUsers(email: string, nickname: string, password: string) {
+  async join(email: string, nickname: string, password: string) {
+    if (!email) {
+      throw new HttpException('이메일이 없습니다.', 400);
+    } else if (!nickname) {
+      throw new HttpException('닉네임이 없습니다.', 400);
+    } else if (!password) {
+      throw new HttpException('비밀번호가 없습니다.', 400);
+    }
+
     const user = await this.usersRepository.findOne({
-      where: { email, nickname, password },
+      where: { email },
     });
     if (user) {
       // 이미 존재하는 유저
@@ -34,6 +43,9 @@ export class UsersService {
         nickname,
         password: hashedPassword,
       });
+      return {
+        message: `email: ${email}, nickname: ${nickname}, password:${password}`,
+      };
     }
   }
 }
