@@ -50,4 +50,10 @@ export class UsersService {
       });
     }
   }
+
+  async findByEmail(email: string) {
+    return await this.usersRepository.findOne({
+      where: { email },
+    });
+  }
 }
