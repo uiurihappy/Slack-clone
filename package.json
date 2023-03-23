@@ -61,6 +61,7 @@
     "swagger-ui-express": "^4.6.0",
     "typeorm": "^0.3.11",
     "typeorm-extension": "^2.4.1",
+    "typeorm-transactional-cls-hooked": "^0.1.21",
     "uuid": "^9.0.0"
   },
   "devDependencies": {

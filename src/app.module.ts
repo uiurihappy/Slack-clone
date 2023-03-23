@@ -21,6 +21,7 @@ import { Users } from './entities/Users';
 import { WorkspaceMembers } from './entities/WorkspaceMembers';
 import { Workspaces } from './entities/Workspaces';
 import { AuthModule } from '@Src/auth/auth.module';
+import { Repository } from 'typeorm';
 
 const getEnv = async () => {
   const response = await axios.get('/test');
@@ -69,7 +70,7 @@ dotenv.config();
     ChannelsModule,
     DMsModule,
     AuthModule,
-    TypeOrmModule.forFeature([Users]),
+    TypeOrmModule.forFeature([Users, WorkspaceMembers, ChannelMembers]),
   ],
   controllers: [AppController],
   providers: [AppService, ConfigService, UsersService],
