@@ -12,6 +12,7 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
     if (!user) {
       throw new UnauthorizedException();
     }
+    // done되면 guard로 이동해 super.login 실행
     return done(null, user);
   }
 }

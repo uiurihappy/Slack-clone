@@ -20,6 +20,7 @@ import { Mentions } from './entities/Mentions';
 import { Users } from './entities/Users';
 import { WorkspaceMembers } from './entities/WorkspaceMembers';
 import { Workspaces } from './entities/Workspaces';
+import { AuthModule } from '@Src/auth/auth.module';
 
 const getEnv = async () => {
   const response = await axios.get('/test');
@@ -67,6 +68,7 @@ dotenv.config();
     WorkspacesModule,
     ChannelsModule,
     DMsModule,
+    AuthModule,
     TypeOrmModule.forFeature([Users]),
   ],
   controllers: [AppController],

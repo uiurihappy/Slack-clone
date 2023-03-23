@@ -46,7 +46,8 @@ async function bootstrap() {
   SwaggerModule.setup('api/docs', app, document, {
     swaggerOptions: { defaultModelsExpandDepth: -1 },
   });
-
+  app.use(passport.initialize());
+  app.use(passport.session());
   await app.listen(port);
 }
 bootstrap();

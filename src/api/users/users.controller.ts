@@ -19,6 +19,8 @@ import { UndefinedToNullInterceptor } from '@Src/common/interceptors/undefinedTo
 import { HttpExceptionFilter } from '@Src/exception/http-exception.filter';
 import { Response, Request } from 'express';
 import { LocalAuthGuard } from '@Src/auth/guard/local-auth.guard';
+import { LoggedInGuard } from '@Src/auth/guard/logged-in.guard';
+import { NotLoggedInGuard } from '@Src/auth/guard/not-logged-in.guard';
 
 @UseInterceptors(UndefinedToNullInterceptor)
 @ApiTags('USER')
@@ -38,9 +40,10 @@ export class UsersController {
   @ApiOperation({ summary: '내 정보 조회' })
   @Get()
   async getUsers(@User() user) {
-    return user;
+    return user || false;
   }
 
+  @UseGuards(new NotLoggedInGuard())
   @ApiOperation({ summary: '회원가입' })
   @Post('join')
   async postUsers(@Body() data: JoinRequestDto, @Res() res: Response) {
@@ -55,6 +58,7 @@ export class UsersController {
     return user;
   }
 
+  @UseGuards(new LoggedInGuard())
   @ApiOperation({ summary: '로그아웃' })
   @Post('logout')
   async logout(@Req() req, @Res() res) {
