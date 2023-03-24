@@ -11,10 +11,10 @@ export class ChannelsController {
   async createChannel() {}
 
   @Get(':name')
-  async getChannel() {}
+  async getSpecificChannel(@Param('name') name: string) {}
 
   @Get(':name/chats')
-  async getChat(@Query() query, @Param() param) {
+  async getChats(@Query() query, @Param() param) {
     console.log(query.perPage, query.page);
     console.log(param.id, param.url);
   }

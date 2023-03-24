@@ -6,9 +6,18 @@ import { Users } from '@Entities/Users';
 import { WorkspaceMembers } from '@Entities/WorkspaceMembers';
 import { ChannelMembers } from '@Entities/ChannelMembers';
 import { Channels } from '@Entities/Channels';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
-  imports: [Workspaces, Users, WorkspaceMembers, ChannelMembers, Channels],
+  imports: [
+    TypeOrmModule.forFeature([
+      Workspaces,
+      Channels,
+      WorkspaceMembers,
+      ChannelMembers,
+      Users,
+    ]),
+  ],
   providers: [WorkspacesService],
   controllers: [WorkspacesController],
 })

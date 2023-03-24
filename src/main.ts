@@ -19,7 +19,11 @@ async function bootstrap() {
     module.hot.dispose(() => app.close());
   }
 
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(
+    new ValidationPipe({
+      transform: true,
+    }),
+  );
   app.useGlobalFilters(new HttpExceptionFilter());
 
   app.use(cookieParser());
