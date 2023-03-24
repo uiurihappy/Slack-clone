@@ -7,6 +7,7 @@ import { Workspaces } from '@Entities/Workspaces';
 import { ChannelChats } from '@Entities/Channelchats';
 import { Users } from '@Entities/Users';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { WorkspaceMembers } from '@Entities/WorkspaceMembers';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       Workspaces,
       ChannelChats,
       Users,
+      WorkspaceMembers,
     ]),
   ],
   providers: [ChannelsService],

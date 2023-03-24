@@ -61,7 +61,7 @@ dotenv.config();
         //     : ['./dist/src/entities/*.entity{.ts,.js}'],
         keepConnectionAlive: true,
         synchronize: false,
-        logging: true,
+        logging: process.env.NODE_ENV !== 'production',
         charset: 'utf8mb4',
       }),
     }),

@@ -1,11 +1,12 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Workspaces } from '@Entities/Workspaces';
-import { Repository } from 'typeorm';
+import { MoreThan, Repository } from 'typeorm';
 import { Channels } from '@Entities/Channels';
 import { WorkspaceMembers } from '@Entities/WorkspaceMembers';
 import { ChannelMembers } from '@Entities/ChannelMembers';
 import { Users } from '@Entities/Users';
+import { ChannelChats } from '@Entities/Channelchats';
 
 @Injectable()
 export class WorkspacesService {
@@ -22,6 +23,8 @@ export class WorkspacesService {
     private channelMembersRepository: Repository<ChannelMembers>,
     @InjectRepository(Users)
     private usersRepository: Repository<Users>,
+    @InjectRepository(ChannelChats)
+    private channelChatsRepository: Repository<ChannelChats>,
   ) {}
 
   async findById(id: number) {
@@ -112,5 +115,99 @@ export class WorkspacesService {
     ).id;
     channelMember.UserId = user.id;
     await this.channelMembersRepository.save(channelMember);
+  }
+
+  async createWorkspaceChannels(url: string, name: string, myId: number) {
+    const workspace = await this.workspacesRepository.findOne({
+      where: { url },
+    });
+
+    const channel = new Channels();
+    channel.name = name;
+    channel.WorkspaceId = workspace.id;
+
+    const channelReturned = await this.channelsRepository.save(channel);
+    const channelMember = new ChannelMembers();
+    channelMember.ChannelId = channelReturned.id;
+    channelMember.UserId = myId;
+    await this.channelMembersRepository.save(channelMember);
+  }
+
+  async getWorkspaceChannelMembers(url: string, name: string) {
+    return this.usersRepository
+      .createQueryBuilder('user')
+      .innerJoin('user.Channels', 'channels', 'channels.name = :name', { name })
+      .innerJoin('user.Workspace', 'workspace', 'workspace.url = :url', {
+        url,
+      })
+      .getMany();
+  }
+
+  // 채널에 멤버추가
+  async createWorkspaceChannelMembers(
+    url: string,
+    name: string,
+    email: string,
+  ) {
+    const channel = await this.channelsRepository
+      .createQueryBuilder('channel')
+      .innerJoin('channel.Workspace', 'workspace', 'workspace.url = :url', {
+        url,
+      })
+      .where('channel.name = :name', { name })
+      .getOne();
+
+    if (!channel) throw new NotFoundException('채널이 존재하지 않습니다.');
+
+    const user = await this.usersRepository
+      .createQueryBuilder('user')
+      .where('email = :email', { email })
+      .getOne();
+    if (!user) throw new NotFoundException('사용자가 존재하지 않습니다.');
+
+    const channelMember = new ChannelMembers();
+    channelMember.ChannelId = channel.id;
+    channelMember.UserId = user.id;
+    await this.channelsRepository.save(channelMember);
+  }
+
+  // 채팅 내역 가져오기
+  async getWorkspaceChannelChats(
+    url: string,
+    name: string,
+    perPage: number,
+    page: number,
+  ) {
+    return this.channelChatsRepository
+      .createQueryBuilder('channelChat')
+      .innerJoin('channelChat.Channel', 'channel', 'channel.name = :name', {
+        name,
+      })
+      .innerJoin('channel.Workspace', 'workspace', 'workspace.url = :url', {
+        url,
+      })
+      .innerJoinAndSelect('channelChat.User', 'user')
+      .orderBy('channelChat.createdAt', 'DESC')
+      .take(perPage)
+      .skip(perPage * (page - 1))
+      .getMany();
+  }
+
+  // 채널에서 읽지 않은 메세지 갯수
+  async getChannelUnreadCount(url: string, name: string, after: string) {
+    const channel = await this.channelsRepository
+      .createQueryBuilder('channel')
+      .innerJoin('channel.Workspace', 'workspace', 'workspace.url = :url', {
+        url,
+      })
+      .where('channel.name = :name', { name })
+      .getOne();
+    return this.channelChatsRepository.count({
+      // COUNT(*)
+      where: {
+        ChannelId: channel.id,
+        createdAt: MoreThan(new Date(after)), // createdAt > "2023-03-24", dayjs 로 포맷 맞춰서 사용도 가능할 듯? 시간까지 쓴다면
+      },
+    });
   }
 }
