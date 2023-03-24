@@ -62,4 +62,18 @@ export class WorkspacesService {
     channelMember.ChannelId = channelReturned.id;
     await this.channelMembersRepository.save(channelMember);
   }
+
+  async getWorkspaceMembers(url: string) {
+    return await this.usersRepository
+      .createQueryBuilder('user')
+      .innerJoin('user.WorkspaceMembers', 'workMembers')
+      // sql injection 막기 위함
+      .innerJoin('workMembers.Workspace', 'workspace', 'workspace.url = :url', {
+        url,
+      })
+      // getRawMany와 getMany의 차이
+      // getRawMany: ID, EMAIL, PASSWORD, Workspace.NAME, Workspace.URL
+      // getMany: 객체로 만들어서 return 해준다.
+      .getMany();
+  }
 }
