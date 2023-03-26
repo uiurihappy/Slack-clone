@@ -8,6 +8,7 @@ import { ChannelChats } from '@Entities/Channelchats';
 import { Users } from '@Entities/Users';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { WorkspaceMembers } from '@Entities/WorkspaceMembers';
+import { EventsModule } from '@Src/api/events/events.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { WorkspaceMembers } from '@Entities/WorkspaceMembers';
       Users,
       WorkspaceMembers,
     ]),
+    EventsModule,
   ],
   providers: [ChannelsService],
   controllers: [ChannelsController],

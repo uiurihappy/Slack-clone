@@ -34,7 +34,7 @@ const dataSource = new DataSource({
   //   process.env.NODEMON_START === 'TRUE'
   //     ? ['src/entities/*.entity{.ts,.js}']
   //     : ['./dist/src/entities/*.entity{.ts,.js}'],
-  migrations: [__dirname + '/src/migrations/*.ts'],
+  migrations: [__dirname + './src/migrations/*.ts'],
   charset: 'utf8mb4_general_ci',
   synchronize: true,
   logging: process.env.NODE_ENV !== 'production',
