@@ -20,6 +20,14 @@ import fs from 'fs';
 import multer from 'multer';
 import path from 'path';
 
+try {
+  fs.readdirSync('uploads');
+} catch (err) {
+  console.log(err);
+  console.error('uploads 폴더가 없어 uploads 폴더를 생성');
+  fs.mkdirSync('uploads');
+}
+
 @ApiTags('CHANNEL')
 @Controller('/workspaces')
 export class ChannelsController {
