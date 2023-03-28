@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Channels } from '@Entities/Channels';
 import { MoreThan, Repository } from 'typeorm';
@@ -171,6 +171,9 @@ export class ChannelsService {
       })
       .where('channel.name = :name', { name })
       .getOne();
+    if (!channel) {
+      throw new NotFoundException('채널이 존재하지 않습니다');
+    }
     for (let i = 0; i < files.length; i++) {
       const chats = new ChannelChats();
       chats.content = files[i].path;

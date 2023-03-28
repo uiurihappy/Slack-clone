@@ -21,7 +21,7 @@ import multer from 'multer';
 import path from 'path';
 
 @ApiTags('CHANNEL')
-@Controller('/workspaces/:url/channels')
+@Controller('/workspaces')
 export class ChannelsController {
   constructor(private readonly channelsService: ChannelsService) {}
 

@@ -11,11 +11,11 @@ import {
 import { Server, Socket } from 'socket.io';
 import { onlineMap } from './onlineMap';
 
-@WebSocketGateway({ namespace: /\/ws-.+/ })
+@WebSocketGateway({ namespace: /\/ws-.+/ }) // 정규식으로 사용한 이유: namespace를 workspace, room을 channel/dm으로 바꿔서 사용하기 위해
 export class EventsGateway
   implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect
 {
-  @WebSocketServer() public server: Server;
+  @WebSocketServer() public server: Server; // socket property
 
   @SubscribeMessage('test')
   handleTest(@MessageBody() data: string) {
@@ -37,10 +37,12 @@ export class EventsGateway
     });
   }
 
+  // OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect 순으로 interface 구현
   afterInit(server: Server): any {
     console.log('init');
   }
 
+  // 개별 소켓
   handleConnection(@ConnectedSocket() socket: Socket) {
     console.log('connected', socket.nsp.name);
     if (!onlineMap[socket.nsp.name]) {
